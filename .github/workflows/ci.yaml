@@ -1,0 +1,28 @@
+name: spotify mobile app in flutter (ci)
+
+# run on pushes and prs (any branch)
+on:
+  push:
+  pull_request:
+
+jobs:
+  # checks dart stuff. might add other jobs for specific platforms/etc.
+  dart:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      # install flutter
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version-file: pubspec.yaml
+          channel: "stable"
+
+      # do linting
+      - run: flutter analyze
+
+      # run tests
+      - run: flutter test
+
+      # build for web
+      - run: flutter build web
