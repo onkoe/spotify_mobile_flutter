@@ -1,16 +1,23 @@
 # spotify_mobile_flutter
 
-A new Flutter project.
+A recreation of Spotify in Flutter, made for these improvements:
 
-## Getting Started
+- Social music discovery
+- Intuitive navigation
+- Engaging playback
+- Better downloads
 
-This project is a starting point for a Flutter application.
+IMPORTANT NOTE: THIS IS FOR AN HCI CLASS, MEANING IT DOES NOT CONNECT TO THE SPOTIFY API! IT IS MORE OF A CONCEPT. (if you've found this expecting an actual Spotify client, we're very sorry!)
 
-A few resources to get you started if this is your first Flutter project:
+## Setup
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+You'll need Flutter. Install it according to [these instructions](https://codelabs.developers.google.com/codelabs/flutter-codelab-first#1). I'm using Zed Editor, but VSCode should work great, too!
+- Install Flutter and common build tools, like MSVC/VS on Windows, the `"Development Tools"` metapackage on Fedora, or `build-essential` on Ubuntu.
+- Make sure everything is happy in `flutter doctor`
+- Install [`just`](https://just.systems/man/en/pre-built-binaries.html).
+- `git clone <repo>`
+- `just run`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Binaries
+
+There are (hopefully) some binaries on GitHub. Link those, and also put it on the Web for our course staff to see.
