@@ -598,7 +598,7 @@ LibraryEntry bigPlaylist() {
 
     final randomArtist = randomChoice(artists);
     final randomAlbum = randomChoice(albums);
-    final randomArt = "https://picsum.photos/256";
+    final randomArt = "https://picsum.photos/seed/$i/256";
 
     list.add(Song(
       title: songTitle,
