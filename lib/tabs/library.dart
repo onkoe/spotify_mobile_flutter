@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dart_random_choice/dart_random_choice.dart';
 import 'package:flutter/material.dart';
@@ -504,6 +507,17 @@ class LibraryEntry {
   });
 
   int get songCount => songs.length;
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'songs': songs.map((song) => song.toJson()).toList(),
+        'art': art,
+        'artist': artist,
+        'creator': creator,
+        'type': type.toString(),
+        'lastModified': lastModified.toIso8601String(),
+        'dateAdded': dateAdded.toIso8601String(),
+      };
 }
 
 class Song {
@@ -520,6 +534,14 @@ class Song {
     required this.art,
     required this.lengthSeconds,
   });
+
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'artist': artist,
+        'albumName': albumName,
+        'art': art,
+        'lengthSeconds': lengthSeconds,
+      };
 }
 
 LibraryEntry bigPlaylist() {
