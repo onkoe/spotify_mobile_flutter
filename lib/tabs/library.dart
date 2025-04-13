@@ -518,6 +518,7 @@ class Song {
   final String title;
   final String artist;
   final String? albumName;
+  final int lengthSeconds;
   final String art; // link to an image
 
   Song({
@@ -525,5 +526,6 @@ class Song {
     required this.artist,
     this.albumName,
     required this.art,
+    required this.lengthSeconds,
   });
 }
