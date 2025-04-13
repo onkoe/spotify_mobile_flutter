@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dart_random_choice/dart_random_choice.dart';
 import 'package:flutter/material.dart';
+import 'package:spotify_mobile_flutter/components/user_options.dart';
 import '../components/navbar.dart';
 import '../subroutes/add_playlist.dart';
 import '../subroutes/playlist.dart';
@@ -113,6 +114,16 @@ class _LibraryPageState extends State<LibraryPage> {
     }).toList();
   }
 
+  /// shows the user options.
+  void userOptions() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return UserOptionsDialog();
+        });
+  }
+
+  /// shows filter options.
   void filterSheet() {
     showModalBottomSheet(
       context: context,
@@ -385,9 +396,7 @@ class _LibraryPageState extends State<LibraryPage> {
           // user icon for settings and such
           IconButton(
             icon: const Icon(Icons.account_circle),
-            onPressed: () {
-              print("hello");
-            },
+            onPressed: userOptions,
             tooltip: "User settings",
           ),
 
