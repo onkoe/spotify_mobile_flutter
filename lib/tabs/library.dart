@@ -2,6 +2,7 @@ import 'package:dart_random_choice/dart_random_choice.dart';
 import 'package:flutter/material.dart';
 import '../components/navbar.dart';
 import '../subroutes/add_playlist.dart';
+import '../subroutes/playlist.dart';
 
 class LibraryPage extends StatefulWidget {
   const LibraryPage({super.key});
@@ -240,7 +241,12 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 
   void _navigateToEntryDetails(LibraryEntry entry) {
-    // TODO(bray): go to playlist/album view
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PlaylistPage(entry: entry),
+      ),
+    );
   }
 
   @override
