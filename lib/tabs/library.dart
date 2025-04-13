@@ -125,8 +125,22 @@ class _LibraryPageState extends State<LibraryPage> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Filter',
+                  // header to say that we're in the filter + sort options
+                  Center(
+                    child: Text(
+                      'Filter and Sort',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // show the filter options first
+                  Text(
+                    'Filter options',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.copyWith(height: 1.0),
                   ),
                   const SizedBox(height: 16),
                   Wrap(
@@ -147,12 +161,19 @@ class _LibraryPageState extends State<LibraryPage> {
                     }).toList(),
                   ),
                   const SizedBox(height: 24),
-                  const Text(
+
+                  // and then the sort options
+                  Text(
                     'Sort by',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.copyWith(height: 1.0),
                   ),
                   const SizedBox(height: 16),
                   Wrap(
                     spacing: 8.0,
+                    runSpacing: 8.0,
                     children: SortOption.values.map((sort) {
                       return ChoiceChip(
                         label: Text(sort.label),
@@ -170,6 +191,8 @@ class _LibraryPageState extends State<LibraryPage> {
                       );
                     }).toList(),
                   ),
+
+                  // also, let users put it in descending order
                   const SizedBox(height: 16),
                   SwitchListTile(
                     title: const Text('Descending order'),
