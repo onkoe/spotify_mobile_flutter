@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dart_random_choice/dart_random_choice.dart';
 import 'package:flutter/material.dart';
 import '../components/navbar.dart';
@@ -360,28 +361,14 @@ class _LibraryPageState extends State<LibraryPage> {
                   // Image
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
-                    child: Image.network(
-                      entry.art,
+                    child: CachedNetworkImage(
+                      imageUrl: entry.art,
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
                       width: 64,
                       height: 64,
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          width: 64,
-                          height: 64,
-                          color: Theme.of(context).colorScheme.primaryContainer,
-                          child: Icon(
-                            entry.type == LibraryEntryType.playlist
-                                ? Icons.queue_music
-                                : entry.type == LibraryEntryType.album
-                                    ? Icons.album
-                                    : Icons.person,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer,
-                          ),
-                        );
-                      },
                     ),
                   ),
                   const SizedBox(width: 16),
