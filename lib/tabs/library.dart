@@ -198,6 +198,91 @@ class _LibraryPageState extends State<LibraryPage> {
     );
   }
 
+  Row _makeEntryCard(
+    BuildContext context,
+    LibraryEntry entry,
+  ) {
+    return Row(
+      children: [
+        // Image
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: CachedNetworkImage(
+            imageUrl: entry.art,
+            placeholder: (context, url) => CircularProgressIndicator(),
+            errorWidget: (context, url, error) => Icon(Icons.error),
+            width: 64,
+            height: 64,
+            fit: BoxFit.cover,
+          ),
+        ),
+        const SizedBox(width: 16),
+        // info
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 2.0,
+            children: [
+              Text(
+                entry.name,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      height: 1.0,
+                    ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+
+              // show the lowest text
+              Text(
+                entry.artist ?? "Made by ${entry.creator ?? "an unknown user"}",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+
+              Text(
+                // set the text
+                () {
+                  // for playlists, return the song ct
+                  if (entry.type == LibraryEntryType.playlist) {
+                    String suffix = entry.songCount == 1 ? "song" : "songs";
+                    return "Playlist • ${entry.songCount} $suffix";
+                  } else if (entry.type == LibraryEntryType.album) {
+                    // but, for albums, we should return the artist
+                    if (entry.artist == null) {
+                      log("null artist on entry: ${JsonEncoder.withIndent('  ').convert(entry.toJson())}");
+                      return "Failed to get artist";
+                    }
+                    String suffix = entry.songCount == 1 ? "song" : "songs";
+
+                    return "Album • ${entry.songCount} $suffix";
+                  } else {
+                    return "couldn't find necessary info";
+                  }
+                }(),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+              ),
+            ],
+          ),
+        ),
+
+        // three dots menu
+        IconButton(
+          icon: const Icon(Icons.more_vert),
+          onPressed: () => _showEntryOptions(context, entry),
+          tooltip: 'More options',
+        ),
+      ],
+    );
+  }
+
   void _showEntryOptions(BuildContext context, LibraryEntry entry) {
     final RenderBox button = context.findRenderObject() as RenderBox;
     final RenderBox overlay =
@@ -359,73 +444,7 @@ class _LibraryPageState extends State<LibraryPage> {
             onLongPress: () => _showEntryOptions(context, entry),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
-              child: Row(
-                children: [
-                  // Image
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: CachedNetworkImage(
-                      imageUrl: entry.art,
-                      placeholder: (context, url) =>
-                          CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                      width: 64,
-                      height: 64,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  // info
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          entry.name,
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        if (entry.artist != null) ...[
-                          const SizedBox(height: 4),
-                          Text(
-                            entry.artist!,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurface),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                        const SizedBox(height: 4),
-                        Text(
-                          '${entry.songCount} ${entry.songCount == 1 ? 'song' : 'songs'}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  // three dots menu
-                  IconButton(
-                    icon: const Icon(Icons.more_vert),
-                    onPressed: () => _showEntryOptions(context, entry),
-                    tooltip: 'More options',
-                  ),
-                ],
-              ),
+              child: _makeEntryCard(context, entry),
             ),
           ),
         );
