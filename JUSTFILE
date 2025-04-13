@@ -1,6 +1,6 @@
 # runs the flutter app for your local system.
 run:
-    flutter run
+    flutter run -d linux
 
 # cleans any leftover build files from your machine.
 clean:
