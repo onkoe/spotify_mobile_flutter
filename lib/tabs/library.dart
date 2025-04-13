@@ -588,6 +588,7 @@ LibraryEntry machineGirlAlbum() {
   return LibraryEntry(
     name: albumName,
     dateAdded: DateTime.now(),
+    artist: artist,
 
     // pretend these are correct pls
     songs: [
@@ -614,6 +615,7 @@ LibraryEntry sbNoLongerFearRazorGuardingMyHeel() {
   return LibraryEntry(
     name: albumName,
     dateAdded: DateTime.now(),
+    artist: artist,
 
     // pretend these are correct pls
     songs: [
@@ -655,6 +657,7 @@ LibraryEntry sbNoLongerFearRazorGuardingMyHeelIii() {
   return LibraryEntry(
     name: albumName,
     dateAdded: DateTime.now(),
+    artist: artist,
 
     // pretend these are correct pls
     songs: [
