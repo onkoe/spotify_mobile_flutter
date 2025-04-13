@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../components/navbar.dart';
+import '../subroutes/add_playlist.dart';
 
 class LibraryPage extends StatefulWidget {
   const LibraryPage({super.key});
@@ -234,7 +235,7 @@ class _LibraryPageState extends State<LibraryPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const CreatePlaylistPage(),
+        builder: (context) => const AddPlaylistPage(),
       ),
     );
   }
@@ -479,23 +480,6 @@ class _LibraryPageState extends State<LibraryPage> {
             label: const Text('Create Playlist'),
           ),
         ],
-      ),
-    );
-  }
-}
-
-// TODO(bray): create playlist page
-class CreatePlaylistPage extends StatelessWidget {
-  const CreatePlaylistPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Create Playlist'),
-      ),
-      body: const Center(
-        child: Text('Create Playlist Page - Implementation left for you'),
       ),
     );
   }
