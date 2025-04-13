@@ -4,6 +4,7 @@ class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
   final String title = "Search";
+  static final String route = "search";
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -25,6 +26,9 @@ class _SearchPageState extends State<SearchPage> {
           ],
         ),
       ),
+
+      // NOTE: search page shouldn't have the tab bar, but instead, should use
+      // a back button. much more idiomatic to users! :D
     );
   }
 }

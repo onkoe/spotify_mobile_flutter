@@ -34,7 +34,7 @@ class SpotifyApp extends StatelessWidget {
     return DynamicColorBuilder(builder: (lightColorScheme, darkColorScheme) {
       return MaterialApp(
           // titlebar/app title
-          title: 'Flutter Demo',
+          title: "definitely Spotify",
 
           // use the system theme mode (light/dark)
           themeMode: ThemeMode.system,

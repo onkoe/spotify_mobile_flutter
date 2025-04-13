@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../components/navbar.dart';
+
 class RecommendationsPage extends StatefulWidget {
   const RecommendationsPage({super.key});
 
   final String title = "Recommendations";
+  static final String route = "recommendations";
 
   @override
   State<RecommendationsPage> createState() => _RecommendationsPageState();
@@ -25,6 +28,10 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
           ],
         ),
       ),
+
+      // nav bar
+      bottomNavigationBar: BottomNavigation(
+          currentRoute: RecommendationsPage.route, onRouteChanged: (s) => ()),
     );
   }
 }

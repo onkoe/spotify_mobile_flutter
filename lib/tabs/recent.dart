@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:spotify_mobile_flutter/tabs/library.dart';
 
+import '../components/navbar.dart';
+
 class RecentListeningPage extends StatefulWidget {
   const RecentListeningPage({super.key});
 
   final String title = "Recent Listening";
+  static final String route = "recent";
 
   @override
   State<RecentListeningPage> createState() => _RecentListeningPageState();
@@ -33,6 +36,10 @@ class _RecentListeningPageState extends State<RecentListeningPage> {
         tooltip: "Search your recent songs",
         child: const Icon(Icons.search),
       ),
+
+      // nav bar
+      bottomNavigationBar: BottomNavigation(
+          currentRoute: RecentListeningPage.route, onRouteChanged: (s) => ()),
     );
   }
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../components/navbar.dart';
+
 class LibraryPage extends StatefulWidget {
   const LibraryPage({super.key});
 
   final String title = "Library";
+  static final String route = "library";
 
   @override
   State<LibraryPage> createState() => _LibraryPageState();
@@ -32,6 +35,10 @@ class _LibraryPageState extends State<LibraryPage> {
         tooltip: "Filter your library",
         child: const Icon(Icons.filter),
       ),
+
+      // nav bar
+      bottomNavigationBar: BottomNavigation(
+          currentRoute: LibraryPage.route, onRouteChanged: (s) => ()),
     );
   }
 }
