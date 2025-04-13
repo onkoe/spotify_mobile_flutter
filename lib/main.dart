@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:spotify_mobile_flutter/components/customscroll.dart';
 import 'package:spotify_mobile_flutter/tabs/library.dart';
 import 'package:spotify_mobile_flutter/tabs/recent.dart';
 import 'package:spotify_mobile_flutter/tabs/recommendations.dart';
@@ -50,6 +51,9 @@ class SpotifyApp extends StatelessWidget {
             colorScheme: _defaultDarkColorScheme,
             useMaterial3: true,
           ),
+
+          // adjust scroll behavior on pc (i.e. click n drag, etc.)
+          scrollBehavior: EasyScrollBehavior(),
 
           // home page
           home: const HomePage(),
