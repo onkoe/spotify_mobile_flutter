@@ -63,8 +63,6 @@ class _LibraryPageState extends State<LibraryPage> {
       sbNoLongerFearRazorGuardingMyHeel(),
       sbNoLongerFearRazorGuardingMyHeelIii(),
     ]);
-
-    // TODO: add a bunch of stuff here.
   }
 
   void sortLibrary() {
@@ -351,59 +349,28 @@ class _LibraryPageState extends State<LibraryPage> {
             color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
+
+        // stuff at the top right
         actions: [
+          // filter/sort sheet button
           IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: _navigateToCreatePlaylist,
-            tooltip: 'Create new playlist',
+            icon: const Icon(Icons.filter_list),
+            onPressed: filterSheet,
+            tooltip: "Filter and sort your library",
           ),
-          IconButton(
-            icon: const Icon(Icons.sort),
+
+          // user icon for settings and such
+          IconButton.outlined(
+            icon: const Icon(Icons.account_circle),
             onPressed: () {
-              setState(() {
-                if (sortDirection == SortDirection.ascending) {
-                  sortDirection = SortDirection.descending;
-                } else {
-                  sortDirection = SortDirection.ascending;
-                }
-                sortLibrary();
-              });
+              print("hello");
             },
-            tooltip: sortDirection == SortDirection.ascending
-                ? 'Sort ascending'
-                : 'Sort descending',
+            tooltip: "User settings",
           ),
         ],
       ),
       body: Column(
         children: [
-          // the chips at the top to filter
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: Row(
-              children: [
-                Chip(
-                  label: Text(selectedSortMode.label),
-                  onDeleted: null,
-                  avatar: Icon(Icons.sort,
-                      size: 18, color: Theme.of(context).colorScheme.primary),
-                ),
-                const SizedBox(width: 8),
-                currentFilter != FilterOption.all
-                    ? Chip(
-                        label: Text(currentFilter.label),
-                        onDeleted: () {
-                          setState(() {
-                            currentFilter = FilterOption.all;
-                          });
-                        },
-                      )
-                    : const SizedBox.shrink(),
-              ],
-            ),
-          ),
-
           // list of all the stuff
           Expanded(
             // if we have any entries, we'll show em.
@@ -420,9 +387,9 @@ class _LibraryPageState extends State<LibraryPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: filterSheet,
-        tooltip: "filter the library",
-        child: const Icon(Icons.filter_list),
+        onPressed: _navigateToCreatePlaylist,
+        tooltip: "Create a new playlist",
+        child: const Icon(Icons.add),
       ),
       bottomNavigationBar: BottomNavigation(
           currentRoute: LibraryPage.route, onRouteChanged: (s) => ()),
@@ -486,12 +453,12 @@ class _LibraryPageState extends State<LibraryPage> {
           // show them two buttons:
           //
           // - create new playlist
-          // - search for music
+          // - TODO(bray): search for music
           const SizedBox(height: 24),
           FilledButton.icon(
             onPressed: _navigateToCreatePlaylist,
             icon: const Icon(Icons.add),
-            label: const Text('Create Playlist'),
+            label: const Text('Create a new playlist'),
           ),
         ],
       ),

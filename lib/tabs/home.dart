@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
             IconButton(icon: const Icon(Icons.add), onPressed: () {}),
 
             // more actions
-            IconButton(icon: const Icon(Icons.more_vert), onPressed: () {})
+            IconButton(icon: const Icon(Icons.more_vert), onPressed: () {}),
           ]),
 
       // the body has a bunch of helpful horizontally-scrollable widgets
