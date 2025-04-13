@@ -9,27 +9,6 @@ class LibraryPage extends StatefulWidget {
   State<LibraryPage> createState() => _LibraryPageState();
 }
 
-class LibraryEntry {
-  final String name;
-  final List<Song> songs;
-  final String image; // link to an image
-
-  LibraryEntry({required this.name, required this.songs, required this.image});
-}
-
-class Song {
-  final String title;
-  final String artist;
-  final String? albumName;
-  final String art; // link to an image
-
-  Song(
-      {required this.title,
-      required this.artist,
-      this.albumName,
-      required this.art});
-}
-
 class _LibraryPageState extends State<LibraryPage> {
   List<LibraryEntry> libraryEntries = List<LibraryEntry>.empty();
 
@@ -55,4 +34,25 @@ class _LibraryPageState extends State<LibraryPage> {
       ),
     );
   }
+}
+
+class LibraryEntry {
+  final String name;
+  final List<Song> songs;
+  final String image; // link to an image
+
+  LibraryEntry({required this.name, required this.songs, required this.image});
+}
+
+class Song {
+  final String title;
+  final String artist;
+  final String? albumName;
+  final String art; // link to an image
+
+  Song(
+      {required this.title,
+      required this.artist,
+      this.albumName,
+      required this.art});
 }
