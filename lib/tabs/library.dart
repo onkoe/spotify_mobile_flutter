@@ -44,6 +44,21 @@ class _LibraryPageState extends State<LibraryPage> {
   @override
   void initState() {
     super.initState();
+    libraryEntries.add(LibraryEntry(
+      name: "...BECAUSE IM YOUNG ARROGANT AND HATE EVERYTHING YOU STAND FOR",
+      dateAdded: DateTime.now(),
+      songs: [
+        Song(
+            title: "うずまき",
+            albumName:
+                "...BECAUSE IM YOUNG ARROGANT AND HATE EVERYTHING YOU STAND FOR",
+            art: "https://f4.bcbits.com/img/a2967787180_16.jpg",
+            artist: "Machine Girl"),
+      ],
+      art: "https://f4.bcbits.com/img/a2967787180_16.jpg",
+      type: LibraryEntryType.album,
+      lastModified: DateTime.utc(2017, 12, 27),
+    ));
     // TODO: add a bunch of stuff here.
   }
 
@@ -340,7 +355,7 @@ class _LibraryPageState extends State<LibraryPage> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.network(
-                      entry.image,
+                      entry.art,
                       width: 64,
                       height: 64,
                       fit: BoxFit.cover,
@@ -494,7 +509,7 @@ enum LibraryEntryType {
 class LibraryEntry {
   final String name;
   final List<Song> songs;
-  final String image; // link to an image
+  final String art; // link to an image
   final String? artist; // artist name (album)
   final String? creator; // account name (playlist)
   final LibraryEntryType type;
@@ -504,7 +519,7 @@ class LibraryEntry {
   LibraryEntry({
     required this.name,
     required this.songs,
-    required this.image,
+    required this.art,
     this.artist,
     this.creator,
     required this.type,
