@@ -18,7 +18,6 @@ class UserOptionsDialog extends StatelessWidget {
       insetPadding:
           const EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0),
 
-      // Wrap contents in a container with width constraints
       child: Container(
         constraints: const BoxConstraints(maxWidth: 360, minWidth: 240),
         child: Stack(
