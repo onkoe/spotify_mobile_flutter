@@ -65,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  dart_random_choice:
+    dependency: "direct main"
+    description:
+      name: dart_random_choice
+      sha256: bb75dd88e68fe7b484b63119ecc39832ec55f3953c036fa46061710bbea5e6ae
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   dynamic_color:
     dependency: "direct main"
     description:
