@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:spotify_mobile_flutter/tabs/library.dart';
+import 'package:spotify_mobile_flutter/tabs/recent.dart';
+import 'package:spotify_mobile_flutter/tabs/recommendations.dart';
+import 'package:spotify_mobile_flutter/tabs/search.dart';
 
 import 'tabs/home.dart';
 
@@ -48,10 +52,16 @@ class SpotifyApp extends StatelessWidget {
           ),
 
           // home page
-          home: const HomePage(title: 'Flutter Demo Home Page'),
+          home: const HomePage(),
 
           // define all routes here
-          routes: const {});
+          routes: {
+            "home": (BuildContext context) => const HomePage(),
+            "recommendations": (context) => const RecommendationsPage(),
+            "search": (context) => const SearchPage(),
+            "recent": (context) => const RecentListeningPage(),
+            "library": (context) => const LibraryPage(),
+          });
     });
   }
 }

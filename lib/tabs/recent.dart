@@ -1,0 +1,38 @@
+import 'package:flutter/material.dart';
+import 'package:spotify_mobile_flutter/tabs/library.dart';
+
+class RecentListeningPage extends StatefulWidget {
+  const RecentListeningPage({super.key});
+
+  final String title = "Recent Listening";
+
+  @override
+  State<RecentListeningPage> createState() => _RecentListeningPageState();
+}
+
+class _RecentListeningPageState extends State<RecentListeningPage> {
+  List<Song> recentSongs = List<Song>.empty();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text("recent"),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => (), // TODO: make this filter lol
+        tooltip: "Search your recent songs",
+        child: const Icon(Icons.search),
+      ),
+    );
+  }
+}
