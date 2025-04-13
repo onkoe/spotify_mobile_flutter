@@ -383,7 +383,7 @@ class _LibraryPageState extends State<LibraryPage> {
           ),
 
           // user icon for settings and such
-          IconButton.outlined(
+          IconButton(
             icon: const Icon(Icons.account_circle),
             onPressed: () {
               print("hello");
