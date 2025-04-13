@@ -17,13 +17,36 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
+          backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+          title: Text(widget.title),
+          actions: [
+            // filter
+            IconButton(icon: const Icon(Icons.filter_alt), onPressed: () {}),
+
+            // add post
+            IconButton(icon: const Icon(Icons.add), onPressed: () {}),
+
+            // more actions
+            IconButton(icon: const Icon(Icons.more_vert), onPressed: () {})
+          ]),
+
+      // the body has a bunch of helpful horizontally-scrollable widgets
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            // pinned/favorite albums, songs, etc.
+            makeHozList(
+                context,
+                [
+                  Container(width: 128, color: Colors.red),
+                  Container(width: 128, color: Colors.blue),
+                  Container(width: 128, color: Colors.green),
+                  Container(width: 128, color: Colors.yellow),
+                  Container(width: 128, color: Colors.orange),
+                ],
+                "Pinned albums"),
+
             const Text('You have pushed the button this many times:'),
           ],
         ),
