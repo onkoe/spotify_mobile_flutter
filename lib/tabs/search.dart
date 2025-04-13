@@ -22,11 +22,11 @@ class _SearchPageState extends State<SearchPage> {
       // inside the app bar, we'll have the back button, search bar, and a
       // voice search button.
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight + 20.0 + 10.0),
+        preferredSize: Size.fromHeight(kToolbarHeight + 10.0 + 10.0),
         child: Container(
             color: Theme.of(context).colorScheme.surfaceContainerLow,
             child: Padding(
-              padding: EdgeInsets.only(top: 20.0, bottom: 10.0),
+              padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
               child: AppBar(
                   clipBehavior: Clip.none,
 
@@ -46,17 +46,32 @@ class _SearchPageState extends State<SearchPage> {
                   // dang, really wish i could do that in Figma lmao
                   title: SearchBar(
                       controller: _searchController,
-                      leading: IconButton(
-                          icon: const Icon(Icons.arrow_back),
-                          onPressed: () {
-                            _searchController.clear();
-                          }),
+
+                      // ask the search bar to automatically focus itself
+                      autoFocus: true,
+
+                      // show that 'clear text' button, but only if we have text.
+                      //
+                      // otherwise, use voice search icon
                       trailing: [
-                        IconButton(
-                            icon: const Icon(Icons.close),
-                            onPressed: () {
-                              _searchController.clear();
-                            })
+                        ValueListenableBuilder<TextEditingValue>(
+                          valueListenable: _searchController,
+                          builder: (context, value, child) {
+                            if (value.text.isNotEmpty) {
+                              return IconButton(
+                                  icon: const Icon(Icons.close),
+                                  onPressed: () {
+                                    _searchController.clear();
+                                  });
+                            } else {
+                              return IconButton(
+                                  icon: const Icon(Icons.mic),
+                                  onPressed: () {
+                                    // TODO(bray): voice search
+                                  });
+                            }
+                          },
+                        )
                       ],
                       hintText: "What do you want to listen to?")),
             )),
