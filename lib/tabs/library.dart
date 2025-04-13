@@ -367,8 +367,18 @@ class _LibraryPageState extends State<LibraryPage> {
             },
             tooltip: "User settings",
           ),
+
+          // fix: dumb lack of padding on right side (i.e. Flutter fails to
+          // adhere to Material 3 spec)
+          //
+          // for more info, see:
+          //
+          // https://github.com/flutter/flutter/issues/91884#issuecomment-1730037283
+          Padding(padding: EdgeInsets.only(right: 16)),
         ],
       ),
+
+      // alright, now we'll show off the user's library
       body: Column(
         children: [
           // list of all the stuff
