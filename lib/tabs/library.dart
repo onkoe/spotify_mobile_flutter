@@ -33,7 +33,7 @@ class _LibraryPageState extends State<LibraryPage> {
     super.initState();
   }
 
-  void addPlaylist(LibraryEntry playlist) {
+  void _addPlaylist(LibraryEntry playlist) {
     try {
       Provider.of<LibraryModel>(context, listen: false).addEntry(playlist);
     } catch (e) {
@@ -44,7 +44,7 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 
   /// shows the user options.
-  void userOptions() {
+  void _userOptions() {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -53,7 +53,7 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 
   /// shows filter options.
-  void filterSheet() {
+  void _filterSheet() {
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -311,7 +311,7 @@ class _LibraryPageState extends State<LibraryPage> {
       ),
     ).then((createdPlaylist) {
       if (createdPlaylist != null) {
-        addPlaylist(createdPlaylist);
+        _addPlaylist(createdPlaylist);
       }
     });
   }
@@ -342,14 +342,14 @@ class _LibraryPageState extends State<LibraryPage> {
           // filter/sort sheet button
           IconButton(
             icon: const Icon(Icons.filter_list),
-            onPressed: filterSheet,
+            onPressed: _filterSheet,
             tooltip: "Filter and sort your library",
           ),
 
           // user icon for settings and such
           IconButton(
             icon: const Icon(Icons.account_circle),
-            onPressed: userOptions,
+            onPressed: _userOptions,
             tooltip: "User settings",
           ),
 
@@ -378,9 +378,9 @@ class _LibraryPageState extends State<LibraryPage> {
                       currentFilter, selectedSortMode, sortDirection);
 
               if (filteredEntries.isEmpty) {
-                return emptyList();
+                return _emptyList();
               } else {
-                return makeList(filteredEntries);
+                return _makeList(filteredEntries);
               }
             }),
           ),
@@ -396,7 +396,7 @@ class _LibraryPageState extends State<LibraryPage> {
     );
   }
 
-  ListView makeList(List<LibraryEntry> entries) {
+  ListView _makeList(List<LibraryEntry> entries) {
     return ListView.builder(
       padding: const EdgeInsets.all(8.0),
       itemCount: entries.length,
@@ -439,7 +439,7 @@ class _LibraryPageState extends State<LibraryPage> {
   // TODO(bray): tell the user if it's empty bc of filters
   //
   // rn it awkwardly says it's empty, even if the filters just make it so
-  Center emptyList() {
+  Center _emptyList() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
