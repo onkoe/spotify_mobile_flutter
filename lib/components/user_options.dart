@@ -89,11 +89,12 @@ class UserOptionsDialog extends StatelessWidget {
 
           // divider line
           Padding(
-              padding: EdgeInsets.only(top: 8, bottom: 4),
-              child: Divider(
-                indent: 128,
-                endIndent: 128,
-              )),
+            padding: EdgeInsets.only(top: 8, bottom: 4),
+            child: Divider(
+              indent: 128,
+              endIndent: 128,
+            ),
+          ),
 
           // lower buttons
           ListTile(
@@ -119,6 +120,30 @@ class UserOptionsDialog extends StatelessWidget {
             subtitle: const Text("Securely sign out of Spotify"),
             leading: Icon(Icons.exit_to_app),
           ),
+
+          Padding(
+            padding: EdgeInsets.only(top: 8, bottom: 4),
+            child: Divider(
+              indent: 128,
+              endIndent: 128,
+            ),
+          ),
+
+          AboutListTile(
+              icon: Icon(Icons.question_mark),
+              aboutBoxChildren: [
+                Text(
+                  """
+Created by Samuel Imose and Barrett Ray for the CS 4063-001 (Human Computer Interfaces) course at the University of Oklahoma in early 2025.
+
+This project is distributed under the MIT License.
+              """,
+                )
+              ],
+              applicationLegalese:
+                  """Spotify, the Spotify logo, and other components that may feature in this application are registered trademarks of Spotify, Inc. This project only serves as an educational to demonstrate a new take on the Spotify app's existing user interface.
+
+No infringement is intended. All rights reserved."""),
 
           // add some space before the bottom
           const SizedBox(height: 8),
