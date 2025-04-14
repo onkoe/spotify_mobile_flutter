@@ -47,12 +47,18 @@ class SongList extends StatelessWidget {
                         // the leading elem is the album cover.
                         //
                         // we cache it to reduce load times in large playlists
-                        leading: CachedNetworkImage(
-                            imageUrl: song.art,
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error)),
+                        leading: () {
+                          if (song.art != null) {
+                            return CachedNetworkImage(
+                                imageUrl: song.art!,
+                                placeholder: (context, url) =>
+                                    CircularProgressIndicator(),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error));
+                          } else {
+                            return null;
+                          }
+                        }(),
 
                         // title, subtile are song's title + artist
                         title: Text(song.title),
