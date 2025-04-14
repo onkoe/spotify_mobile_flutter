@@ -295,13 +295,21 @@ class _LibraryPageState extends State<LibraryPage> {
         onTap: () => {},
       ),
 
-      // TODO(bray): trigger a fake "copied link to clipboard" toast
       PopupMenuItem(
         child: const ListTile(
           leading: Icon(Icons.share),
           title: Text("Share"),
         ),
-        onTap: () => {},
+        onTap: () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: () {
+            switch (entry.type) {
+              case LibraryEntryType.album:
+                return Text("Copied album link to clipboard");
+              case LibraryEntryType.playlist:
+                return Text("Copied playlist link to clipboard");
+            }
+          }(),
+        )),
       ),
     ];
   }
