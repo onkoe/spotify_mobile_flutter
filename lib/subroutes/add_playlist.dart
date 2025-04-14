@@ -3,7 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../tabs/library.dart';
+import '../types.dart';
 
 class AddPlaylistPage extends StatefulWidget {
   const AddPlaylistPage({super.key});
