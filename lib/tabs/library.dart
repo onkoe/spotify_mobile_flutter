@@ -403,12 +403,29 @@ class _LibraryPageState extends State<LibraryPage> {
       itemBuilder: (context, index) {
         final entry = entries[index];
 
+        void makeMenu(BuildContext context, TapDownDetails details) {
+          log("ooh makeMenu called?");
+
+          showMenu(
+            context: context,
+            items: _rightClickMenu(context, entry),
+
+            // FIXME(bray): no way this is idiomatic flutter lmao
+            position: RelativeRect.fromLTRB(
+              details.globalPosition.dx,
+              details.globalPosition.dy,
+              details.globalPosition.dx,
+              details.globalPosition.dy,
+            ),
+          );
+        }
+
         // make a big ahh card for that entry
         return Card(
           margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
           child: InkWell(
             onTap: () => _navigateToEntryDetails(entry),
-            onLongPress: () => _showEntryOptions(context, entry),
+            onSecondaryTapDown: (details) => makeMenu(context, details),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: _makeEntryCard(context, entry),
