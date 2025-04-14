@@ -239,14 +239,19 @@ class _LibraryPageState extends State<LibraryPage> {
         // Image
         ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
-          child: CachedNetworkImage(
-            imageUrl: entry.art,
-            placeholder: (context, url) => CircularProgressIndicator(),
-            errorWidget: (context, url, error) => Icon(Icons.error),
-            width: 64,
-            height: 64,
-            fit: BoxFit.cover,
-          ),
+          child: () {
+            if (entry.art != null) {
+              return CachedNetworkImage(
+                  imageUrl: entry.art!,
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  width: 64,
+                  height: 64,
+                  fit: BoxFit.cover);
+            } else {
+              return Icon(Icons.error);
+            }
+          }(),
         ),
         const SizedBox(width: 16),
         // info
@@ -516,7 +521,7 @@ enum LibraryEntryType {
 class LibraryEntry {
   final String name;
   final List<Song> songs;
-  final String art; // link to an image
+  final String? art; // link to an image
   final String? artist; // artist name (album)
   final String? creator; // account name (playlist)
   final LibraryEntryType type;
@@ -526,7 +531,7 @@ class LibraryEntry {
   LibraryEntry({
     required this.name,
     required this.songs,
-    required this.art,
+    this.art,
     this.artist,
     this.creator,
     required this.type,
@@ -553,13 +558,13 @@ class Song {
   final String artist;
   final String? albumName;
   final int lengthSeconds;
-  final String art; // link to an image
+  final String? art; // link to an image
 
   Song({
     required this.title,
     required this.artist,
     this.albumName,
-    required this.art,
+    this.art,
     required this.lengthSeconds,
   });
 
