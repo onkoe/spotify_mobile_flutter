@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:spotify_mobile_flutter/components/user_options.dart';
 import 'package:spotify_mobile_flutter/types.dart';
@@ -237,50 +238,69 @@ class _LibraryPageState extends State<LibraryPage> {
         ),
 
         // three dots menu
-        IconButton(
+        PopupMenuButton(
           icon: const Icon(Icons.more_vert),
-          onPressed: () => _showEntryOptions(context, entry),
-          tooltip: 'More options',
+          itemBuilder: (context) => _rightClickMenu(context, entry),
+          tooltip: "More options",
         ),
       ],
     );
   }
 
-  void _showEntryOptions(BuildContext context, LibraryEntry entry) {
-    final RenderBox button = context.findRenderObject() as RenderBox;
-    final RenderBox overlay =
-        Overlay.of(context).context.findRenderObject() as RenderBox;
-    final RelativeRect position = RelativeRect.fromRect(
-      Rect.fromPoints(
-        button.localToGlobal(Offset.zero, ancestor: overlay),
-        button.localToGlobal(button.size.bottomRight(Offset.zero),
-            ancestor: overlay),
-      ),
-      Offset.zero & overlay.size,
-    );
+  /// a list of items to appear in an entry's right click menu...
+  List<PopupMenuItem<dynamic>> _rightClickMenu(
+      BuildContext context, LibraryEntry entry) {
+    log("about to show menu for entry: ${entry.name}");
 
-    showMenu(
-      context: context,
-      position: position,
-      items: [
-        PopupMenuItem(
-          child: const Text('Edit details'),
-          onTap: () => {},
+    return [
+      // when a user taps Open, send em to the list
+      PopupMenuItem(
+        child: const ListTile(
+          leading: Icon(Icons.edit),
+          title: Text("Open"),
         ),
+        onTap: () => _navigateToEntryDetails(entry),
+      ),
+
+      // we can only delete playlists. if it's a playlist, we're only
+      // removing it...
+      if (entry.type == LibraryEntryType.playlist)
         PopupMenuItem(
-          child: const Text('Delete'),
-          onTap: () => {},
-        ),
+          child: const ListTile(
+            leading: Icon(Icons.delete),
+            title: Text("Delete playlist..."),
+          ),
+          onTap: () => {}, // TODO(bray): playlist deletion popup
+        )
+      else
         PopupMenuItem(
-          child: const Text('Download'),
-          onTap: () => {},
+          child: const ListTile(
+            leading: Icon(Icons.delete),
+            title: Text("Remove from library..."),
+          ),
+          onTap: () => {}, // TODO(bray): album removal popup
         ),
-        PopupMenuItem(
-          child: const Text('Share'),
-          onTap: () => {},
+
+      // TODO(bray): show if playlist isn't marked as downloaded already.
+      //
+      // otherwise, show 'Remove from Downloads...'
+      PopupMenuItem(
+        child: const ListTile(
+          leading: Icon(Icons.download),
+          title: Text("Download"),
         ),
-      ],
-    );
+        onTap: () => {},
+      ),
+
+      // TODO(bray): trigger a fake "copied link to clipboard" toast
+      PopupMenuItem(
+        child: const ListTile(
+          leading: Icon(Icons.share),
+          title: Text("Share"),
+        ),
+        onTap: () => {},
+      ),
+    ];
   }
 
   void _navigateToCreatePlaylist() {
