@@ -39,6 +39,7 @@ dependencies:
   material_symbols_icons: ^4.2815.0
   dart_random_choice: ^0.2.0
   cached_network_image: ^3.4.1
+  provider: ^6.1.4
 
 dev_dependencies:
   flutter_test:
