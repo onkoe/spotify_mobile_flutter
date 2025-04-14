@@ -292,7 +292,9 @@ class _LibraryPageState extends State<LibraryPage> {
           leading: Icon(Icons.download),
           title: Text("Download"),
         ),
-        onTap: () => {},
+        onTap: () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("This item has already been downloaded"),
+        )),
       ),
 
       PopupMenuItem(
