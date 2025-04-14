@@ -1,5 +1,7 @@
 //! contains a `provider` (library) implementation to hold the user's library.
 
+import 'dart:developer';
+
 import 'package:collection/collection.dart';
 import 'package:dart_random_choice/dart_random_choice.dart';
 import 'package:flutter/foundation.dart';
@@ -53,6 +55,8 @@ class LibraryModel extends ChangeNotifier {
   ///
   /// Throws an error if the entry doesn't exist.
   void deleteEntry(String entryName) {
+    log("attempting to delete library entry: $entryName");
+
     // check if the entry even exists.
     //
     // if it does, find its index so we can remove it...
