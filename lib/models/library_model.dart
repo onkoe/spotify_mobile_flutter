@@ -1,6 +1,7 @@
 //! contains a `provider` (library) implementation to hold the user's library.
 
 import 'package:collection/collection.dart';
+import 'package:dart_random_choice/dart_random_choice.dart';
 import 'package:flutter/foundation.dart';
 
 import '../tabs/library.dart';
@@ -11,6 +12,21 @@ class LibraryModel extends ChangeNotifier {
   /// the actual collection
   final List<LibraryEntry> _libraryEntries =
       List<LibraryEntry>.empty(growable: true);
+
+  /// constructor, which will set up the initial values
+  LibraryModel() {
+    // Machine Girl album i like
+    _libraryEntries.add(machineGirlAlbum());
+
+    // make a very long playlist from rng'd values
+    _libraryEntries.add(bigPlaylist());
+
+    // more albums
+    _libraryEntries.addAll([
+      sbNoLongerFearRazorGuardingMyHeel(),
+      sbNoLongerFearRazorGuardingMyHeelIii(),
+    ]);
+  }
 
   /// Grabs the library collection as a slice.
   UnmodifiableListView<LibraryEntry> get libraryEntries =>
@@ -115,4 +131,208 @@ class LibraryModel extends ChangeNotifier {
     maybeEntry.songs.removeAt(index);
     notifyListeners();
   }
+}
+
+/*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+* initial state creators below. not too important lol
+*
+*/
+
+LibraryEntry bigPlaylist() {
+  List<Song> list = List.empty(growable: true);
+
+  // make 1000 songs lol
+  for (int i in Iterable.generate(1000)) {
+    final songTitle = 'Song ${i + 1}';
+    final artists = [
+      "potsu",
+      "GNB CHILI",
+      "\$uicideboy\$",
+      "Berlioz",
+      "Daft Punk",
+      "Nujabes",
+      "SAINT PEPSI",
+      "DJ Boring",
+      "Deathbrain",
+      "Sia",
+      "Eevee",
+      "Men at Work"
+    ];
+    final albums = [
+      "Sing Me A Lullaby, My Sweet Temptation",
+      "unexpected",
+      "Everyday is Christmas (Deluxe Edition)",
+      "World Champion",
+      "Basement Popstar",
+      "Long Term Effects of Suffering",
+      "Either Hated Or Ignored",
+      "ivy league",
+      "Cargo",
+      "Business As Usual",
+    ];
+
+    final randomArtist = randomChoice(artists);
+    final randomAlbum = randomChoice(albums);
+    final randomArt = "https://picsum.photos/seed/$i/256";
+
+    list.add(Song(
+      title: songTitle,
+      artist: randomArtist,
+      albumName: randomAlbum,
+      art: randomArt,
+      lengthSeconds: 120,
+    ));
+  }
+
+  // return the list we made inside a LibraryEntry playlist
+  return LibraryEntry(
+      name: "giant playlist",
+      dateAdded: DateTime.utc(2025, 04, 01),
+      songs: list,
+      art: "https://picsum.photos/1024",
+      type: LibraryEntryType.playlist,
+      lastModified: DateTime.now(),
+      creator: "barrett");
+}
+
+LibraryEntry machineGirlAlbum() {
+  final String albumName =
+      "...BECAUSE IM YOUNG ARROGANT AND HATE EVERYTHING YOU STAND FOR";
+  final String art = "https://f4.bcbits.com/img/a2967787180_16.jpg";
+  final String artist = "Machine Girl";
+
+  return LibraryEntry(
+    name: albumName,
+    dateAdded: DateTime.now(),
+    artist: artist,
+
+    // pretend these are correct pls
+    songs: [
+      for (int _ in Iterable.generate(8))
+        Song(
+            title: "うずまき",
+            albumName: albumName,
+            art: art,
+            artist: artist,
+            lengthSeconds: (2 * 60) + 47)
+    ],
+    art: art,
+    type: LibraryEntryType.album,
+    lastModified: DateTime.utc(2017, 12, 27),
+  );
+}
+
+LibraryEntry sbNoLongerFearRazorGuardingMyHeel() {
+  final String albumName = "I NO LONGER FEAR THE RAZOR GUARDING MY HEEL";
+  final String art =
+      "https://lastfm.freetls.fastly.net/i/u/1024x0/f6af794b04110d90cbc9148b9f61a20a.jpg";
+  final String artist = "\$uicideboy\$";
+
+  return LibraryEntry(
+    name: albumName,
+    dateAdded: DateTime.now(),
+    artist: artist,
+
+    // pretend these are correct pls
+    songs: [
+      Song(
+        title: "My Flaws Burn Through My Skin Like Demonic Flames from Hell",
+        albumName: albumName,
+        art: art,
+        artist: artist,
+        lengthSeconds: (2 * 60) + 47,
+      ),
+      Song(
+        title: "My Scars Are Like Evidence Being Mailed to the Judge",
+        albumName: albumName,
+        art: art,
+        artist: artist,
+        lengthSeconds: (2 * 60) + 2,
+      ),
+      Song(
+        title:
+            "I Will Celebrate for Stepping on Broken Glass and Slipping on Stomach Soaked Floors",
+        albumName: albumName,
+        art: art,
+        artist: artist,
+        lengthSeconds: (2 * 60) + 18,
+      ),
+    ],
+    art: art,
+    type: LibraryEntryType.album,
+    lastModified: DateTime.utc(2015, 8, 1),
+  );
+}
+
+LibraryEntry sbNoLongerFearRazorGuardingMyHeelIii() {
+  final String albumName = "I NO LONGER FEAR... (III)";
+  final String art =
+      "https://lastfm.freetls.fastly.net/i/u/2048x0/2cda72350d018777e8a07c9065067386.jpg";
+  final String artist = "\$uicideboy\$";
+
+  return LibraryEntry(
+    name: albumName,
+    dateAdded: DateTime.now(),
+    artist: artist,
+
+    // pretend these are correct pls
+    songs: [
+      Song(
+        title:
+            "If You Were to Get What You Deserve, You Would Know What the Bottom of a Tire Tastes Like",
+        albumName: albumName,
+        art: art,
+        artist: artist,
+        lengthSeconds: (2 * 60) + 37,
+      ),
+      Song(
+        title: "Soul Doubt",
+        albumName: albumName,
+        art: art,
+        artist: artist,
+        lengthSeconds: (2 * 60) + 0,
+      ),
+      Song(
+        title: "All That Glitters Is Not Gold, But It's Still Damn Beautiful",
+        albumName: albumName,
+        art: art,
+        artist: artist,
+        lengthSeconds: (2 * 60) + 17,
+      ),
+    ],
+    art: art,
+    type: LibraryEntryType.album,
+    lastModified: DateTime.utc(2016, 12, 17),
+  );
 }
