@@ -66,6 +66,13 @@ class _LibraryPageState extends State<LibraryPage> {
     ]);
   }
 
+  void addPlaylist(LibraryEntry playlist) {
+    setState(() {
+      libraryEntries.add(playlist);
+      sortLibrary();
+    });
+  }
+
   void sortLibrary() {
     setState(() {
       int t(LibraryEntry a, LibraryEntry b) {
@@ -363,7 +370,12 @@ class _LibraryPageState extends State<LibraryPage> {
       MaterialPageRoute(
         builder: (context) => const AddPlaylistPage(),
       ),
-    );
+    ).then((createdPlaylist) {
+      if (createdPlaylist != null) {
+        addPlaylist(createdPlaylist);
+        sortLibrary();
+      }
+    });
   }
 
   void _navigateToEntryDetails(LibraryEntry entry) {
