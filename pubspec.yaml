@@ -40,6 +40,7 @@ dependencies:
   dart_random_choice: ^0.2.0
   cached_network_image: ^3.4.1
   provider: ^6.1.4
+  collection: ^1.19.1
 
 dev_dependencies:
   flutter_test:
