@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:spotify_mobile_flutter/components/user_options.dart';
 import 'package:spotify_mobile_flutter/types.dart';
@@ -270,7 +269,9 @@ class _LibraryPageState extends State<LibraryPage> {
             leading: Icon(Icons.delete),
             title: Text("Delete playlist..."),
           ),
-          onTap: () => {}, // TODO(bray): playlist deletion popup
+          onTap: () => Future.delayed(Duration.zero, () async {
+            await _promptUserOnPlaylistDeletion(entry);
+          }),
         )
       else
         PopupMenuItem(
@@ -278,7 +279,9 @@ class _LibraryPageState extends State<LibraryPage> {
             leading: Icon(Icons.delete),
             title: Text("Remove from library..."),
           ),
-          onTap: () => {}, // TODO(bray): album removal popup
+          onTap: () => Future.delayed(Duration.zero, () async {
+            await _promptUserOnAlbumRemoval(entry);
+          }),
         ),
 
       // TODO(bray): show if playlist isn't marked as downloaded already.
@@ -321,6 +324,98 @@ class _LibraryPageState extends State<LibraryPage> {
       context,
       MaterialPageRoute(
         builder: (context) => PlaylistPage(entry: entry),
+      ),
+    );
+  }
+
+  /// asks the user if they'd really like to delete a playlist.
+  Future<bool?> _promptUserOnPlaylistDeletion(LibraryEntry entry) async {
+    return await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text("Delete playlist"),
+        content: const Text("Are you sure you wish to delete this playlist?"),
+        actions: <Widget>[
+          // give them a chance to cancel
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+
+          // dangerous action: delete (red)
+          TextButton(
+            onPressed: () {
+              // try to delete the entry
+              try {
+                log("attempting to delete entry: ${entry.name}");
+                Provider.of<LibraryModel>(context, listen: false)
+                    .deleteEntry(entry.name);
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(e.toString())),
+                );
+              }
+
+              // no matter what, pop ourselves off the navigator stack
+              Navigator.pop(context, true);
+            },
+
+            // make it red
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.error,
+            ),
+
+            // text
+            child: Text("Delete"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// asks the user if they'd really like to remove an album from their
+  /// collection.
+  Future<bool?> _promptUserOnAlbumRemoval(LibraryEntry entry) async {
+    return await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text("Remove album"),
+        content: const Text(
+            "Are you sure you wish to remove this album from your collection?"),
+        actions: <Widget>[
+          // give them a chance to cancel
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+
+          // dangerous action: remove from library
+          TextButton(
+            onPressed: () {
+              // try to remove the entry
+              try {
+                log("attempting to remove entry: ${entry.name}");
+                Provider.of<LibraryModel>(context, listen: false)
+                    .deleteEntry(entry.name);
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(e.toString())),
+                );
+              }
+
+              // no matter what, pop ourselves off the navigator stack
+              Navigator.pop(context, true);
+            },
+
+            // make it red
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.error,
+            ),
+
+            // text
+            child: Text("Remove"),
+          ),
+        ],
       ),
     );
   }
