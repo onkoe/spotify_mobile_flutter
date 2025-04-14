@@ -131,6 +131,55 @@ class LibraryModel extends ChangeNotifier {
     maybeEntry.songs.removeAt(index);
     notifyListeners();
   }
+
+  /// Returns a filtered, sorted library based on the given options.
+  UnmodifiableListView<LibraryEntry> filteredSortedEntries(
+      FilterOption filters, SortOption sortMode, SortDirection sortDirection) {
+    // clone and filter the list
+    List<LibraryEntry> filtered = _libraryEntries.where((entry) {
+      switch (filters) {
+        case FilterOption.all:
+          return true;
+        case FilterOption.playlists:
+          return entry.type == LibraryEntryType.playlist;
+        case FilterOption.albums:
+          return entry.type == LibraryEntryType.album;
+      }
+    }).toList();
+
+    // sort that list
+    filtered.sort((a, b) => comp(a, b, sortMode, sortDirection));
+
+    // return that filtered, sorted list
+    return UnmodifiableListView(filtered);
+  }
+}
+
+/// internal function that can compare two library entries based on the given
+/// sorting options.
+int comp(LibraryEntry a, LibraryEntry b, SortOption sortMode,
+    SortDirection sortDirection) {
+  LibraryEntry one;
+  LibraryEntry two;
+
+  if (sortDirection == SortDirection.descending) {
+    one = b;
+    two = a;
+  } else {
+    one = a;
+    two = b;
+  }
+
+  switch (sortMode) {
+    case SortOption.alphabetical:
+      return one.name.toLowerCase().compareTo(two.name.toLowerCase());
+    case SortOption.lastModified:
+      return one.lastModified.compareTo(two.lastModified);
+    case SortOption.creator:
+      return (one.creator ?? "").compareTo(two.creator ?? "");
+    case SortOption.recentlyAdded:
+      return one.dateAdded.compareTo(two.dateAdded);
+  }
 }
 
 /*
