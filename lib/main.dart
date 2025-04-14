@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:provider/provider.dart';
 import 'package:spotify_mobile_flutter/components/customscroll.dart';
+import 'package:spotify_mobile_flutter/models/library_model.dart';
 import 'package:spotify_mobile_flutter/tabs/library.dart';
 import 'package:spotify_mobile_flutter/tabs/recent.dart';
 import 'package:spotify_mobile_flutter/tabs/recommendations.dart';
@@ -9,7 +11,11 @@ import 'package:spotify_mobile_flutter/tabs/search.dart';
 import 'tabs/home.dart';
 
 Future<void> main() async {
-  runApp(const SpotifyApp());
+  // run the app with the library model global state
+  runApp(ChangeNotifierProvider(
+    create: (context) => LibraryModel(),
+    child: const SpotifyApp(),
+  ));
 }
 
 class SpotifyApp extends StatelessWidget {
