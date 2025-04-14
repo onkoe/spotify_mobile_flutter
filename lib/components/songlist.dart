@@ -4,7 +4,8 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:spotify_mobile_flutter/tabs/library.dart';
+
+import '../types.dart';
 
 class SongList extends StatelessWidget {
   final List<Song> songs;

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../components/songlist.dart';
-import '../tabs/library.dart';
+import '../types.dart';
 
 class PlaylistPage extends StatefulWidget {
   final LibraryEntry entry;

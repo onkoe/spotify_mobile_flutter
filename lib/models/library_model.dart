@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:dart_random_choice/dart_random_choice.dart';
 import 'package:flutter/foundation.dart';
 
-import '../tabs/library.dart';
+import '../types.dart';
 
 /// The user's library collection... wrapped into a type to allow us to
 /// use/modify it from anywhere! :D

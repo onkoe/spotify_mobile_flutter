@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spotify_mobile_flutter/tabs/library.dart';
 
 import '../components/navbar.dart';
+import '../types.dart';
 
 class RecentListeningPage extends StatefulWidget {
   const RecentListeningPage({super.key});
