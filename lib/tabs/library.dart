@@ -2,10 +2,12 @@ import 'dart:developer';
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dart_random_choice/dart_random_choice.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:spotify_mobile_flutter/components/user_options.dart';
 import '../components/navbar.dart';
+import '../models/library_model.dart';
 import '../subroutes/add_playlist.dart';
 import '../subroutes/playlist.dart';
 
@@ -54,58 +56,13 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 
   void addPlaylist(LibraryEntry playlist) {
-    setState(() {
-      libraryEntries.add(playlist);
-      sortLibrary();
-    });
-  }
-
-  void sortLibrary() {
-    setState(() {
-      int t(LibraryEntry a, LibraryEntry b) {
-        LibraryEntry larger;
-        LibraryEntry smaller;
-
-        if (sortDirection == SortDirection.descending) {
-          larger = b;
-          smaller = a;
-        } else {
-          larger = a;
-          smaller = b;
-        }
-
-        if (selectedSortMode == SortOption.alphabetical) {
-          return larger.name
-              .toLowerCase()
-              .compareTo(smaller.name.toLowerCase());
-        } else if (selectedSortMode == SortOption.lastModified) {
-          return larger.lastModified.compareTo(smaller.lastModified);
-        } else if (selectedSortMode == SortOption.creator) {
-          return (larger.creator ?? "").compareTo(smaller.creator ?? "");
-        } else if (selectedSortMode == SortOption.recentlyAdded) {
-          //
-          return larger.dateAdded.compareTo(smaller.dateAdded);
-        }
-
-        // this should never happen
-        throw Error();
-      }
-
-      libraryEntries.sort((a, b) => t(a, b));
-    });
-  }
-
-  List<LibraryEntry> filterLibraryEntries() {
-    return libraryEntries.where((entry) {
-      switch (currentFilter) {
-        case FilterOption.all:
-          return true;
-        case FilterOption.playlists:
-          return entry.type == LibraryEntryType.playlist;
-        case FilterOption.albums:
-          return entry.type == LibraryEntryType.album;
-      }
-    }).toList();
+    try {
+      Provider.of<LibraryModel>(context, listen: false).addEntry(playlist);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    }
   }
 
   /// shows the user options.
@@ -188,9 +145,7 @@ class _LibraryPageState extends State<LibraryPage> {
                             setSheetState(() {
                               selectedSortMode = sort;
                             });
-                            setState(() {
-                              sortLibrary();
-                            });
+                            setState(() {}); // require rebuild
                           }
                         },
                       );
@@ -211,7 +166,7 @@ class _LibraryPageState extends State<LibraryPage> {
                         }
                       });
                       setState(() {
-                        sortLibrary();
+                        setState(() {}); // require rebuild
                       });
                     },
                   ),
@@ -360,7 +315,6 @@ class _LibraryPageState extends State<LibraryPage> {
     ).then((createdPlaylist) {
       if (createdPlaylist != null) {
         addPlaylist(createdPlaylist);
-        sortLibrary();
       }
     });
   }
@@ -376,8 +330,6 @@ class _LibraryPageState extends State<LibraryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final filteredEntries = filterLibraryEntries();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
@@ -422,13 +374,18 @@ class _LibraryPageState extends State<LibraryPage> {
             // if we have any entries, we'll show em.
             //
             // if not, show an empty list redirection
-            child: () {
+            child:
+                Consumer<LibraryModel>(builder: (context, libraryModel, child) {
+              final UnmodifiableListView<LibraryEntry> filteredEntries =
+                  libraryModel.filteredSortedEntries(
+                      currentFilter, selectedSortMode, sortDirection);
+
               if (filteredEntries.isEmpty) {
                 return emptyList();
               } else {
                 return makeList(filteredEntries);
               }
-            }(),
+            }),
           ),
         ],
       ),
