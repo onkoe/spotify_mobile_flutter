@@ -297,11 +297,12 @@ class NowPlayingModel extends ChangeNotifier {
     }
 
     // start a new timer now
+    _progressTimer = Timer.periodic(
       // we'll update every 200ms
       const Duration(milliseconds: 200),
 
       // this callback just checks if we're done with the song yet
-      () {
+      (timer) {
         // if we're done, mark the song as done!
         if (_nowPlaying != null &&
             _currentTime! >= Duration(seconds: _nowPlaying!.lengthSeconds)) {
