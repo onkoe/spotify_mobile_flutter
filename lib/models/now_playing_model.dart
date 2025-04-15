@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 
@@ -107,6 +108,8 @@ class NowPlayingModel extends ChangeNotifier {
   /// If a song is playing already, that song will be pushed into `history`,
   /// and this new song will play instead.
   void playSong(Song song) {
+    log("playing song... ${song.title}");
+
     // move old song, if any, to history
     if (_nowPlaying != null) {
       _history.addFirst(_nowPlaying!);
@@ -130,6 +133,8 @@ class NowPlayingModel extends ChangeNotifier {
 
   /// Immediately pauses the player.
   void pause() {
+    log("pausing song... ${nowPlaying?.title}");
+
     // early return when no song to avoid rerender
     if (_nowPlaying == null) {
       return;
@@ -170,6 +175,8 @@ class NowPlayingModel extends ChangeNotifier {
 
   /// Skips to the next song, if any.
   void skipNext() {
+    log("skipping to next song");
+
     if (_queue.isNotEmpty) {
       Song next = _queue.removeFirst();
       playSong(next);
@@ -180,6 +187,8 @@ class NowPlayingModel extends ChangeNotifier {
   ///
   /// This plays the last song added to the history.
   void skipBack() {
+    log("skipping to previous song");
+
     if (_history.isNotEmpty) {
       Song last = _history.removeLast();
       playSong(last);
@@ -188,6 +197,8 @@ class NowPlayingModel extends ChangeNotifier {
 
   /// Clears the queue.
   void clearQueue() {
+    log("clearing queue");
+
     _queue.clear();
     notifyListeners();
   }
@@ -196,6 +207,8 @@ class NowPlayingModel extends ChangeNotifier {
   ///
   /// Must be a value from [0.0, 1.0].
   void seek(double position) {
+    log("seeking to position: $position");
+
     // dont skip around without a song
     if (_nowPlaying == null) {
       return;
@@ -221,6 +234,8 @@ class NowPlayingModel extends ChangeNotifier {
 
   /// Toggles the shuffle feature.
   void toggleShuffle() {
+    log("toggled shuffle");
+
     // swap em
     if (_shuffle == Shuffle.on) {
       _shuffle = Shuffle.off;
@@ -233,6 +248,8 @@ class NowPlayingModel extends ChangeNotifier {
 
   /// Moves between repeat modes.
   void nextRepeatMode() {
+    log("swapped repeat mode");
+
     switch (_repeat) {
       // swap em
       case RepeatSetting.queue:
@@ -257,6 +274,8 @@ class NowPlayingModel extends ChangeNotifier {
   */
 
   void _timerMarkSongCompleted() {
+    log("song marked complete! ${nowPlaying?.title}");
+
     // reset the timer
     _currentTime = null;
 
@@ -265,6 +284,8 @@ class NowPlayingModel extends ChangeNotifier {
   }
 
   void _startTimer() {
+    log("start timer");
+
     // cancel any existing timer
     if (_progressTimer != null) {
       _progressTimer!.cancel();
@@ -276,7 +297,6 @@ class NowPlayingModel extends ChangeNotifier {
     }
 
     // start a new timer now
-    _progressTimer = Timer(
       // we'll update every 200ms
       const Duration(milliseconds: 200),
 
@@ -299,6 +319,8 @@ class NowPlayingModel extends ChangeNotifier {
   }
 
   void _stopTimer() {
+    log("stop timer");
+
     _progressTimer?.cancel();
     _progressTimer = null;
   }
