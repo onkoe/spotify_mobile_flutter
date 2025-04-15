@@ -22,7 +22,12 @@ class BottomNavigation extends StatelessWidget {
         onRouteChanged(route);
         Navigator.of(context).pushReplacementNamed(route);
       },
-      destinations: const [
+      destinations: _destinations(),
+    );
+  }
+
+  /// a list of all the buttons on the navbar
+  List<Widget> _destinations() => const [
         NavigationDestination(
           icon: Icon(Icons.home_outlined),
           selectedIcon: Icon(Icons.home),
@@ -48,9 +53,7 @@ class BottomNavigation extends StatelessWidget {
           selectedIcon: Icon(Icons.library_music),
           label: 'Library',
         ),
-      ],
-    );
-  }
+      ];
 
   int _getIndexFromRoute(String route) {
     switch (route) {
