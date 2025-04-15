@@ -59,6 +59,7 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
     );
   }
 
+
   Widget buildItemBox(Map<String, String> item) {
     return Container(
       width: 150.0,
