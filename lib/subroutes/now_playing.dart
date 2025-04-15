@@ -137,8 +137,14 @@ class NowPlayingPage extends StatelessWidget {
 
                     // play
                     IconButton.filled(
-                      icon: Icon(Icons.play_arrow),
-                      onPressed: () => info.skipBack(),
+                      icon: () {
+                        if (info.paused == Playback.paused) {
+                          return Icon(Icons.play_arrow);
+                        } else {
+                          return Icon(Icons.pause);
+                        }
+                      }(),
+                      onPressed: () => info.togglePlayback(),
                       iconSize: 32.0,
                     ),
 
