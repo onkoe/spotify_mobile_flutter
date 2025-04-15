@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 
+import '../components/navbar.dart';
 import '../components/songlist.dart';
+import '../tabs/library.dart';
 import '../types.dart';
 
 class PlaylistPage extends StatefulWidget {
@@ -30,6 +32,8 @@ class _PlaylistPageState extends State<PlaylistPage> {
       appBar: AppBar(
         title: Text(entry.name),
       ),
+
+      // show the playlist stuff
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -44,6 +48,10 @@ class _PlaylistPageState extends State<PlaylistPage> {
           ],
         ),
       ),
+
+      // navbar, pointing to the library tab
+      bottomNavigationBar: BottomNavigation(
+          currentRoute: LibraryPage.route, onRouteChanged: (s) => ()),
     );
   }
 }
