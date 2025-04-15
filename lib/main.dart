@@ -3,6 +3,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:provider/provider.dart';
 import 'package:spotify_mobile_flutter/components/customscroll.dart';
 import 'package:spotify_mobile_flutter/models/library_model.dart';
+import 'package:spotify_mobile_flutter/models/now_playing_model.dart';
 import 'package:spotify_mobile_flutter/tabs/library.dart';
 import 'package:spotify_mobile_flutter/tabs/recent.dart';
 import 'package:spotify_mobile_flutter/tabs/recommendations.dart';
@@ -11,9 +12,12 @@ import 'package:spotify_mobile_flutter/tabs/search.dart';
 import 'tabs/home.dart';
 
 Future<void> main() async {
-  // run the app with the library model global state
-  runApp(ChangeNotifierProvider(
-    create: (context) => LibraryModel(),
+  // run the app with our global state
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => LibraryModel()),
+      ChangeNotifierProvider(create: (context) => NowPlayingModel()),
+    ],
     child: const SpotifyApp(),
   ));
 }
