@@ -3,7 +3,6 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:elapsed_timer/elapsed_timer.dart';
 import 'package:flutter/foundation.dart';
 
 import '../types.dart';
@@ -274,7 +273,7 @@ class NowPlayingModel extends ChangeNotifier {
     }
 
     // start a new timer now
-    _progressTimer = ElapsedTimer(
+    _progressTimer = Timer(
       // we'll update every 200ms
       const Duration(milliseconds: 200),
 
