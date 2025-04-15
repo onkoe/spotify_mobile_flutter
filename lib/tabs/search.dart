@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:spotify_mobile_flutter/components/songlist.dart';
 
 import '../components/navbar.dart';
+import '../types.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -15,6 +17,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController _searchController = TextEditingController();
+  List<Song> _results = List.empty(growable: true);
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +49,54 @@ class _SearchPageState extends State<SearchPage> {
                   // dang, really wish i could do that in Figma lmao
                   title: SearchBar(
                       controller: _searchController,
+                      onChanged: (value) {
+                        setState(() {
+                          if (value.trim().isNotEmpty) {
+                            // fake search results (this aint a db, buddy)
+                            _results = [
+                              Song(
+                                artist: "Jack Johnson",
+                                title: "Upside Down",
+                                lengthSeconds: (3 * 60) + 29,
+                                albumName: "Upside Down",
+                                art:
+                                    "https://lastfm.freetls.fastly.net/i/u/770x0/db318f87093a2079aad4a00665fe2b78.jpg#db318f87093a2079aad4a00665fe2b78",
+                              ),
+                              Song(
+                                artist: "Taylor Swift",
+                                title: "Wildest Dreams",
+                                lengthSeconds: (3 * 60) + 40,
+                                albumName: "1989",
+                                art: "https://picsum.photos/2000/2000",
+                              ),
+                              Song(
+                                artist: "Adele",
+                                title: "Hello",
+                                lengthSeconds: (4 * 60) + 55,
+                                albumName: "25",
+                                art: "https://picsum.photos/id/10/2000",
+                              ),
+                              Song(
+                                artist: "The Weeknd",
+                                title: "Blinding Lights",
+                                lengthSeconds: (3 * 60) + 20,
+                                albumName: "After Hours",
+                                art: "https://picsum.photos/id/20/2000",
+                              ),
+                              Song(
+                                artist: "Billie Eilish",
+                                title: "Bad Guy",
+                                lengthSeconds: (3 * 60) + 14,
+                                albumName:
+                                    "When We All Fall Asleep, Where Do We Go?",
+                                art: "https://picsum.photos/id/30/2000",
+                              ),
+                            ];
+                          } else {
+                            _results = [];
+                          }
+                        });
+                      },
 
                       // ask the search bar to automatically focus itself
                       autoFocus: true,
@@ -84,7 +135,23 @@ class _SearchPageState extends State<SearchPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            const Text("search"),
+            SizedBox(height: 12),
+
+            // add results
+            () {
+              if (_results.isEmpty) {
+                return Center(
+                    child: Column(children: [
+                  Icon(
+                    Icons.search,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                  Text("Search for anything!"),
+                ]));
+              } else {
+                return SongList(songs: _results);
+              }
+            }()
           ],
         ),
       ),
