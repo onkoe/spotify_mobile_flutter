@@ -280,7 +280,21 @@ class NowPlayingModel extends ChangeNotifier {
     _currentTime = null;
 
     // just play the next song
-    skipNext();
+    if (_queue.isNotEmpty) {
+      Song next = _queue.removeFirst();
+      playSong(next);
+    } else {
+      // move old song, if any, to history
+      if (_nowPlaying != null) {
+        _history.addFirst(_nowPlaying!);
+      }
+
+      // set it to null and pause
+      _nowPlaying = null;
+      _paused = Playback.paused;
+    }
+
+    notifyListeners();
   }
 
   void _startTimer() {
