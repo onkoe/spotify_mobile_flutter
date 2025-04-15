@@ -22,45 +22,95 @@ class PlayerBar extends StatelessWidget {
     }
 
     // otherwise, we're a small bar straight outta spotify...
-    return Material(
-      // add an "inkwell" to make the cool tapping animations work
-      child: SizedBox(
-        height: 56,
-        child: InkWell(
-            onTap: () => log("show the music player subroute"),
-            child: Row(children: [
-              // show the album art
-              if (song.art != null)
-                CachedNetworkImage(
-                  imageUrl: song.art!,
-                )
-              else
-                Placeholder(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12.0),
+        child: Material(
+            // give it a bg color
+            color: Theme.of(context).colorScheme.surfaceContainer,
 
-              // title and artist
-              Column(children: [
-                Text(song.title, maxLines: 1),
-                Text(song.artist, maxLines: 1),
-              ]),
+            // add an "inkwell" to make the cool tapping animations work
 
-              // on the right side, show a skip icon
+            child: SizedBox(
+              height: 64,
+              child: InkWell(
+                onTap: () => log("show the music player subroute"),
+                child: Row(
+                  children: [
+                    const SizedBox(width: 8),
 
-              // and a pause/play icon
-              Consumer<NowPlayingModel>(builder: (context, info, child) {
-                Icon icon;
+                    // show the album art
+                    if (song.art != null)
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: CachedNetworkImage(
+                          imageUrl: song.art!,
+                          width: 48,
+                          height: 48,
+                        ),
+                      )
+                    else
+                      Placeholder(fallbackWidth: 48, fallbackHeight: 48),
 
-                if (info.paused == Playback.paused) {
-                  icon = Icon(Icons.pause);
-                } else {
-                  icon = Icon(Icons.play_arrow);
-                }
+                    // space out the title/artist + art
+                    const SizedBox(width: 12),
 
-                return IconButton(
-                  icon: icon,
-                  onPressed: () {},
-                );
-              })
-            ])),
+                    // title and artist
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            song.title,
+                            maxLines: 1,
+                            textAlign: TextAlign.start,
+                            style: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          Text(
+                            song.artist,
+                            maxLines: 1,
+                            textAlign: TextAlign.start,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // add another row, but aligned to the right
+                    const Spacer(),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Row(
+                        children: [
+                          // show a skip icon
+
+                          // and a pause/play icon
+                          Consumer<NowPlayingModel>(
+                              builder: (context, info, child) {
+                            Icon icon;
+
+                            if (info.paused == Playback.paused) {
+                              icon = Icon(Icons.pause);
+                            } else {
+                              icon = Icon(Icons.play_arrow);
+                            }
+
+                            return IconButton(
+                              icon: icon,
+                              onPressed: () {},
+                            );
+                          })
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(width: 8),
+                  ],
+                ),
+              ),
+            )),
       ),
     );
   }

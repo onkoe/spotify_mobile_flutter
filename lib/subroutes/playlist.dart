@@ -51,7 +51,9 @@ class _PlaylistPageState extends State<PlaylistPage> {
 
       // navbar, pointing to the library tab
       bottomNavigationBar: BottomNavigation(
-          currentRoute: LibraryPage.route, onRouteChanged: (s) => ()),
+        currentRoute: LibraryPage.route,
+        onRouteChanged: (s) => (),
+      ),
     );
   }
 }

@@ -23,6 +23,10 @@ class BottomNavigation extends StatelessWidget {
       // - `NavBar`: always present
       return Column(mainAxisSize: MainAxisSize.min, children: [
         PlayerBar(),
+
+        // a lil spacing
+        const SizedBox(height: 4),
+
         NavigationBar(
           // represent the page we're on visually
           selectedIndex: _getIndexFromRoute(currentRoute),
