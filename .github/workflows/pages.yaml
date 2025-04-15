@@ -14,3 +14,4 @@ jobs:
       - uses: bluefireteam/flutter-gh-pages@v9
         with:
           compileToWasm: true
+          baseHref: /spotify_mobile_flutter/
