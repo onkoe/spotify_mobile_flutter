@@ -26,3 +26,4 @@ jobs:
 
       # build for web
       - run: flutter build web
+
