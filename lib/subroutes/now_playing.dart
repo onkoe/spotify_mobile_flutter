@@ -138,7 +138,7 @@ class NowPlayingPage extends StatelessWidget {
                     IconButton.filled(
                       icon: Icon(Icons.play_arrow),
                       onPressed: () => info.skipBack(),
-                      iconSize: 36.0,
+                      iconSize: 32.0,
                     ),
 
                     // skip next
@@ -165,7 +165,7 @@ class NowPlayingPage extends StatelessWidget {
                 ),
 
                 // extra spacing to make it further from the bottom
-                const SizedBox(height: 96),
+                const SizedBox(height: 48),
               ],
             );
           },
