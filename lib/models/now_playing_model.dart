@@ -58,6 +58,9 @@ class NowPlayingModel extends ChangeNotifier {
     return elapsedMs / totalMs;
   }
 
+  /// Grabs the current time we're at. Can be null if no song.
+  Duration? get currentTime => _currentTime;
+
   /// Checks whether we're paused or playing.
   Playback get paused => _paused;
 
