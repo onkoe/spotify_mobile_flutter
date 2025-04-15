@@ -12,11 +12,31 @@ class NowPlayingPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
+
+      // add playback stuff here
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text("now playing"),
+          children: [
+            // giant album art
+
+            // title
+
+            // artist
+
+            // controls
+            Row(
+              children: [
+                // shuffle
+
+                // skip back
+
+                // play
+
+                // skip next
+
+                // repeat
+              ],
+            ),
           ],
         ),
       ),
