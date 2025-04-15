@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,31 +29,92 @@ class NowPlayingPage extends StatelessWidget {
             Song? song = info.nowPlaying;
 
             return Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 // giant album art
                 () {
+                  double imgSize = min(MediaQuery.of(context).size.width * 0.7,
+                      MediaQuery.of(context).size.height * 0.6);
+
                   if (song != null && song.art != null) {
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: CachedNetworkImage(
                         imageUrl: song.art!,
-                        width: 256,
-                        height: 256,
+                        width: imgSize,
+                        height: imgSize,
                       ),
                     );
                   } else {
-                    return Placeholder(fallbackWidth: 48, fallbackHeight: 48);
+                    return Placeholder(
+                        fallbackWidth: imgSize, fallbackHeight: imgSize);
                   }
                 }(),
 
+                const SizedBox(height: 12),
+
                 // title
-                Text(song?.title ?? "Not playing"),
+                Text(
+                  song?.title ?? "Not playing",
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
 
                 // artist
-                Text(song?.artist ?? "Unknown artist"),
+                Text(
+                  song?.artist ?? "Unknown artist",
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+
+                const SizedBox(height: 48),
+
+                // slider
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Consumer<NowPlayingModel>(
+                    builder: (context, model, child) {
+                      return Column(
+                        children: [
+                          Slider(
+                            value: model.progress ?? 0.0,
+                            max: 1.0,
+                            onChanged: (value) {
+                              if (model.progress != null) {
+                                model.seek(model.progress!);
+                              }
+                            },
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  _timeText(model.currentTime ?? Duration.zero),
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                                Text(
+                                  _timeText(Duration(
+                                      seconds:
+                                          model.nowPlaying?.lengthSeconds ??
+                                              0)),
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+
+                const SizedBox(height: 16),
 
                 // controls
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 4.0,
                   children: [
                     // shuffle
                     IconButton(
@@ -75,6 +138,7 @@ class NowPlayingPage extends StatelessWidget {
                     IconButton.filled(
                       icon: Icon(Icons.play_arrow),
                       onPressed: () => info.skipBack(),
+                      iconSize: 36.0,
                     ),
 
                     // skip next
@@ -99,11 +163,23 @@ class NowPlayingPage extends StatelessWidget {
                     ),
                   ],
                 ),
+
+                // extra spacing to make it further from the bottom
+                const SizedBox(height: 96),
               ],
             );
           },
         ),
       ),
     );
+  }
+
+  String _timeText(Duration duration) {
+    // min, seconds
+    String m = duration.inMinutes.remainder(60).toString().padLeft(1, '0');
+    String s = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
+
+    // text with that
+    return "$m:$s";
   }
 }
