@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Returns the navbar...
-void navbar() {}
-
 class BottomNavigation extends StatelessWidget {
   final String currentRoute;
   final Function(String) onRouteChanged;
