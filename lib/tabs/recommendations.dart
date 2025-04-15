@@ -12,39 +12,88 @@ class RecommendationsPage extends StatefulWidget {
 }
 
 class _RecommendationsPageState extends State<RecommendationsPage> {
-  
   final List<Map<String, String>> topPicks = [
-    { "title": "Get Up Mix!", "imageUrl": "assets/images/get_up_mix.jpg"},
-    { "title": "Chill Electronic Vibes", "imageUrl": "assets/images/chill_electronic.jpg"},
-    { "title": "Feel Good Station", "imageUrl": "assets/images/feel_good.jpg"},
-    { "title": "1989 (Taylor's Version)", "imageUrl": "assets/images/feel_good.jpg"},
-    { "title": "Discovery Station", "imageUrl": "assets/images/feel_good.jpg"},
-    { "title": "Drake & Similiar Artists Station", "imageUrl": "assets/images/feel_good.jpg"},
+    {"title": "Get Up Mix!", "imageUrl": "assets/images/get_up_mix.jpg"},
+    {
+      "title": "Chill Electronic Vibes",
+      "imageUrl": "assets/images/chill_electronic.jpg"
+    },
+    {"title": "Feel Good Station", "imageUrl": "assets/images/feel_good.jpg"},
+    {
+      "title": "1989 (Taylor's Version)",
+      "imageUrl": "assets/images/feel_good.jpg"
+    },
+    {"title": "Discovery Station", "imageUrl": "assets/images/feel_good.jpg"},
+    {
+      "title": "Drake & Similiar Artists Station",
+      "imageUrl": "assets/images/feel_good.jpg"
+    },
   ];
 
   final List<Map<String, String>> recentlyPlayed = [
-    {"title": "Mozart - The 50 Best C...", "imageUrl": "https://picsum.photos/seed/mozart/150"},
-    {"title": "Lemonade - Beyonce", "imageUrl": "https://picsum.photos/seed/beyonce/150"},
-    {"title": "DeBi TiRAR MaS FOToS - Bad Bunny", "imageUrl": "https://picsum.photos/seed/badbunny/150"},
-    {"title": "4 Kampe II - Joe Dwet & File & Burna Boy", "imageUrl": "https://picsum.photos/seed/joedwet/150"},
+    {
+      "title": "Mozart - The 50 Best C...",
+      "imageUrl": "https://picsum.photos/seed/mozart/150"
+    },
+    {
+      "title": "Lemonade - Beyonce",
+      "imageUrl": "https://picsum.photos/seed/beyonce/150"
+    },
+    {
+      "title": "DeBi TiRAR MaS FOToS - Bad Bunny",
+      "imageUrl": "https://picsum.photos/seed/badbunny/150"
+    },
+    {
+      "title": "4 Kampe II - Joe Dwet & File & Burna Boy",
+      "imageUrl": "https://picsum.photos/seed/joedwet/150"
+    },
   ];
 
   final List<Map<String, String>> newReleases = [
-    {"title": "More Chaos - Ken Carson", "imageUrl": "https://picsum.photos/seed/kencarson/150"},
-    {"title": "Bout U (Single) - Rema", "imageUrl": "https://picsum.photos/seed/rema/150"},
-    {"title": "EGO (Single) - Nemzzz", "imageUrl": "https://picsum.photos/seed/nemzzz/150"},
-    {"title": "BlownBoy RU - Ruger", "imageUrl": "https://picsum.photos/seed/ruger/150"},
-    {"title": "Show Me Love (Single) - WizTheMc & bees & honey", "imageUrl": "https://picsum.photos/seed/wizthemc/150"},
+    {
+      "title": "More Chaos - Ken Carson",
+      "imageUrl": "https://picsum.photos/seed/kencarson/150"
+    },
+    {
+      "title": "Bout U (Single) - Rema",
+      "imageUrl": "https://picsum.photos/seed/rema/150"
+    },
+    {
+      "title": "EGO (Single) - Nemzzz",
+      "imageUrl": "https://picsum.photos/seed/nemzzz/150"
+    },
+    {
+      "title": "BlownBoy RU - Ruger",
+      "imageUrl": "https://picsum.photos/seed/ruger/150"
+    },
+    {
+      "title": "Show Me Love (Single) - WizTheMc & bees & honey",
+      "imageUrl": "https://picsum.photos/seed/wizthemc/150"
+    },
   ];
 
   final List<Map<String, String>> exploreNewAfricanMusic = [
-    {"title": "Afro-Soul Mix", "imageUrl": "https://picsum.photos/seed/afrosoul/150"},
-    {"title": "Ruger Essentials", "imageUrl": "https://picsum.photos/seed/rugeressentials/150"},
-    {"title": "Afro-Fusion", "imageUrl": "https://picsum.photos/seed/afrofusion/150"},
-    {"title": "For Broken Ears - Tems", "imageUrl": "https://picsum.photos/seed/tems/150"},
-    {"title": "Burna Boy: Love Songs", "imageUrl": "https://picsum.photos/seed/burnaboylove/150"},
+    {
+      "title": "Afro-Soul Mix",
+      "imageUrl": "https://picsum.photos/seed/afrosoul/150"
+    },
+    {
+      "title": "Ruger Essentials",
+      "imageUrl": "https://picsum.photos/seed/rugeressentials/150"
+    },
+    {
+      "title": "Afro-Fusion",
+      "imageUrl": "https://picsum.photos/seed/afrofusion/150"
+    },
+    {
+      "title": "For Broken Ears - Tems",
+      "imageUrl": "https://picsum.photos/seed/tems/150"
+    },
+    {
+      "title": "Burna Boy: Love Songs",
+      "imageUrl": "https://picsum.photos/seed/burnaboylove/150"
+    },
   ];
-
 
   Widget buildSectionTitle(String title) {
     return Padding(
@@ -76,14 +125,15 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
       ),
       child: InkWell(
         onTap: () {
-         // print("Tapped on ${item['title']}");
+          // print("Tapped on ${item['title']}");
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(8.0)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(8.0)),
                 child: Image.network(
                   item['imageUrl']!,
                   width: double.infinity,
@@ -91,7 +141,8 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
                       color: Colors.grey[300],
-                      child: const Center(child: Icon(Icons.music_note, size: 40)),
+                      child:
+                          const Center(child: Icon(Icons.music_note, size: 40)),
                     );
                   },
                 ),
@@ -128,7 +179,6 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
     );
   }
 
-
   Widget buildHorizontalItemList(List<Map<String, String>> items) {
     return SizedBox(
       height: 180.0, // Adjust height as needed
@@ -143,13 +193,12 @@ class _RecommendationsPageState extends State<RecommendationsPage> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Center(child: Text(widget.title)),
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+        title: Text(widget.title),
       ),
       body: SingleChildScrollView(
         child: Column(
