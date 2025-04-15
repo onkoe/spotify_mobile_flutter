@@ -2,13 +2,15 @@ name: pub to github pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-22.04
 
     steps:
-        - uses: actions/checkout@v4
-        - uses: subosito/flutter-action@v2
-        - uses: bluefireteam/flutter-gh-pages@v9
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+      - uses: bluefireteam/flutter-gh-pages@v9
+        with:
+          compileToWasm: true
