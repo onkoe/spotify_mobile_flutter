@@ -305,6 +305,7 @@ class NowPlayingModel extends ChangeNotifier {
       (timer) {
         // if we're done, mark the song as done!
         if (_nowPlaying != null &&
+            _currentTime != null &&
             _currentTime! >= Duration(seconds: _nowPlaying!.lengthSeconds)) {
           _timerMarkSongCompleted();
         }

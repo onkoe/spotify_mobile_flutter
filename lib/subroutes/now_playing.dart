@@ -76,13 +76,14 @@ class NowPlayingPage extends StatelessWidget {
                       return Column(
                         children: [
                           Slider(
-                            value: model.progress ?? 0.0,
+                            value: (model.progress ?? 0.0).clamp(0.0, 1.0),
                             max: 1.0,
                             onChanged: (value) {
                               if (model.progress != null) {
-                                model.seek(model.progress!);
+                                model.seek(value);
                               }
                             },
+                            allowedInteraction: SliderInteraction.slideThumb,
                           ),
                           Padding(
                             padding:
