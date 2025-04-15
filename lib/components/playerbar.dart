@@ -96,9 +96,9 @@ class PlayerBar extends StatelessWidget {
                             Icon icon;
 
                             if (info.paused == Playback.paused) {
-                              icon = Icon(Icons.pause);
-                            } else {
                               icon = Icon(Icons.play_arrow);
+                            } else {
+                              icon = Icon(Icons.pause);
                             }
 
                             return IconButton(
