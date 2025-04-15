@@ -58,6 +58,8 @@ class NowPlayingPage extends StatelessWidget {
                 Text(
                   song?.title ?? "Not playing",
                   style: Theme.of(context).textTheme.headlineSmall,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
                 ),
 
                 // artist
