@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spotify_mobile_flutter/models/now_playing_model.dart';
+import 'package:spotify_mobile_flutter/subroutes/now_playing.dart';
 import '../types.dart';
 
 class PlayerBar extends StatelessWidget {
@@ -35,7 +34,12 @@ class PlayerBar extends StatelessWidget {
             child: SizedBox(
               height: 64,
               child: InkWell(
-                onTap: () => log("show the music player subroute"),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NowPlayingPage(),
+                  ),
+                ),
                 child: Row(
                   children: [
                     const SizedBox(width: 8),
