@@ -103,7 +103,7 @@ class PlayerBar extends StatelessWidget {
 
                             return IconButton(
                               icon: icon,
-                              onPressed: () {},
+                              onPressed: () => info.togglePlayback(),
                             );
                           })
                         ],
