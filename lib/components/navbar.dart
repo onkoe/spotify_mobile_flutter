@@ -16,12 +16,17 @@ class BottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NavigationBar(
+      // represent the page we're on visually
       selectedIndex: _getIndexFromRoute(currentRoute),
+
+      // move to the thing we clicked... when we click
       onDestinationSelected: (index) {
         final route = _getRouteFromIndex(index);
         onRouteChanged(route);
         Navigator.of(context).pushReplacementNamed(route);
       },
+
+      // things we can click
       destinations: _destinations(),
     );
   }
