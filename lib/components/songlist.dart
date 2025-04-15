@@ -4,7 +4,9 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../models/now_playing_model.dart';
 import '../types.dart';
 
 class SongList extends StatelessWidget {
@@ -42,35 +44,45 @@ class SongList extends StatelessWidget {
                   Song song = songs[index];
 
                   // return its info in this container :D
-                  return Container(
-                      padding: EdgeInsets.all(8.0),
-                      child: ListTile(
-                        // the leading elem is the album cover.
-                        //
-                        // we cache it to reduce load times in large playlists
-                        leading: () {
-                          if (song.art != null) {
-                            return CachedNetworkImage(
-                                imageUrl: song.art!,
-                                placeholder: (context, url) =>
-                                    CircularProgressIndicator(),
-                                errorWidget: (context, url, error) =>
-                                    Icon(Icons.error));
-                          } else {
-                            return null;
-                          }
-                        }(),
-
-                        // title, subtile are song's title + artist
-                        title: Text(song.title),
-                        subtitle: Text(song.artist),
-
-                        // then we also provide a 'more' button.
-                        //
-                        // TODO(bray): allow user to specify options
-                        trailing: IconButton(
-                            icon: Icon(Icons.more_vert), onPressed: () => ()),
-                      ));
+                  //
+                  // FIXME(bray): songs that're playing should be `primaryColor`
+                  return _makeSongSect(song);
                 })));
+  }
+
+  Widget _makeSongSect(Song song) {
+    return Consumer<NowPlayingModel>(builder: (context, info, child) {
+      return InkWell(
+        onTap: () => info.playSong(song),
+        child: Container(
+          padding: EdgeInsets.all(8.0),
+          child: ListTile(
+            // the leading elem is the album cover.
+            //
+            // we cache it to reduce load times in large playlists
+            leading: () {
+              if (song.art != null) {
+                return CachedNetworkImage(
+                    imageUrl: song.art!,
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Icon(Icons.error));
+              } else {
+                return null;
+              }
+            }(),
+
+            // title, subtile are song's title + artist
+            title: Text(song.title),
+            subtitle: Text(song.artist),
+
+            // then we also provide a 'more' button.
+            //
+            // TODO(bray): allow user to specify options
+            trailing:
+                IconButton(icon: Icon(Icons.more_vert), onPressed: () => ()),
+          ),
+        ),
+      );
+    });
   }
 }
