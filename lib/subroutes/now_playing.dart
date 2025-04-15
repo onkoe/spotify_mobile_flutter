@@ -48,7 +48,9 @@ class NowPlayingPage extends StatelessWidget {
                     );
                   } else {
                     return Placeholder(
-                        fallbackWidth: imgSize, fallbackHeight: imgSize);
+                      fallbackWidth: imgSize,
+                      fallbackHeight: imgSize,
+                    );
                   }
                 }(),
 

@@ -23,7 +23,7 @@ class SongList extends StatelessWidget {
 
             // style it
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceContainerHigh,
+              color: Theme.of(context).colorScheme.surfaceContainerLow,
               borderRadius: BorderRadius.circular(16.0),
             ),
 
@@ -32,11 +32,17 @@ class SongList extends StatelessWidget {
             child: ListView.builder(
                 // we'll only handle this many songs
                 itemCount: songs.length,
+                shrinkWrap: true,
+
+                // don't scroll automatically - let the parent do it
+                physics: const ClampingScrollPhysics(),
 
                 // set a "prototype", which makes unloaded elements have a
                 // temporary representation while loading occurs :)
-                prototypeItem:
-                    Container(padding: EdgeInsets.all(8.0), child: ListTile()),
+                prototypeItem: Container(
+                  padding: EdgeInsets.all(8.0),
+                  child: ListTile(),
+                ),
 
                 // each song will appear as one of these widgets
                 itemBuilder: (BuildContext context, int index) {

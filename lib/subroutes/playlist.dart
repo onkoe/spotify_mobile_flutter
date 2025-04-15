@@ -1,5 +1,8 @@
 //! A playlist you can browse through.
 
+import 'dart:math';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../components/navbar.dart';
@@ -28,26 +31,73 @@ class _PlaylistPageState extends State<PlaylistPage> {
 
   @override
   Widget build(BuildContext context) {
+    String title;
+
+    switch (entry.type) {
+      case LibraryEntryType.playlist:
+        title = "Playlist";
+      case LibraryEntryType.album:
+        title = "Album";
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(entry.name),
+        title: Text(title),
       ),
 
       // show the playlist stuff
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // show playlist art and name
-            Text("playlist art and name"),
+      body: CustomScrollView(slivers: [
+        // header stuff
+        SliverToBoxAdapter(
+            child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              // a little padding
+              SizedBox(height: 8),
 
-            // show all the songs in the playlist
-            Expanded(
-              child: SongList(songs: entry.songs),
-            )
-          ],
-        ),
-      ),
+              // show playlist art and name
+              () {
+                double imgSize = min(MediaQuery.of(context).size.width * 0.45,
+                    MediaQuery.of(context).size.height * 0.5);
+
+                if (entry.art != null) {
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: CachedNetworkImage(
+                      imageUrl: entry.art!,
+                      width: imgSize,
+                      height: imgSize,
+                      fit: BoxFit.fitHeight,
+                    ),
+                  );
+                } else {
+                  return Placeholder(
+                    fallbackWidth: imgSize,
+                    fallbackHeight: imgSize,
+                  );
+                }
+              }(),
+
+              const SizedBox(height: 12),
+
+              // title
+              Text(
+                entry.name,
+                style: Theme.of(context).textTheme.headlineSmall,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+              ),
+            ],
+          ),
+        )),
+
+        // show all the songs in the playlist
+        SliverFillRemaining(
+          hasScrollBody: true,
+          child: SongList(songs: entry.songs),
+        )
+      ]),
 
       // navbar, pointing to the library tab
       bottomNavigationBar: BottomNavigation(
