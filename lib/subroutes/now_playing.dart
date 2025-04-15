@@ -43,6 +43,7 @@ class NowPlayingPage extends StatelessWidget {
                         imageUrl: song.art!,
                         width: imgSize,
                         height: imgSize,
+                        fit: BoxFit.fitHeight,
                       ),
                     );
                   } else {
